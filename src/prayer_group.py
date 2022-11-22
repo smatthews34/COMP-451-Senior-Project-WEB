@@ -4,9 +4,9 @@ from prayer_group_forms import InviteForm, SignupForm
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "weareprayergroup" #make secure
 
-@app.route("/")
+@app.route("/") #reroute somewhere
 def hello():
-  return "hello"
+  return "Hello World"
 
 @app.get("/invite")
 def GET_invite():
