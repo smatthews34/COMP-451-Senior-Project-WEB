@@ -2,4 +2,7 @@
 senior_project_WEB/venv/
 
 #Cache
-src/_pychache_/
+src/__pycache__/
+
+#Firebase Info
+prayer-group-fc24c-firebase-adminsdk-xav6o-9d178f3518.json
