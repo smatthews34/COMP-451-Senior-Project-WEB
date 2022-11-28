@@ -2,15 +2,15 @@ from flask import Flask, request, render_template, flash, redirect, url_for
 from prayer_group_forms import InviteForm, SignupForm, LoginForm
 import firebase_admin
 from firebase_admin import credentials
-from firebase_admin import db
+from firebase_admin import firestore
+from firebase_admin import auth
 
-# Fetch the service account key JSON file contents
+# Database setup
 cred = credentials.Certificate('Prayer-Group-WEB\prayer-group-fc24c-firebase-adminsdk-xav6o-9d178f3518.json')
-firebase_admin.initialize_app(cred)
+app = firebase_admin.initialize_app(cred)
+db = firestore.client()
 
-#How to access a node reference: ref = db.reference('Database reference')
-#print(ref.get())
-
+# Flask setup
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "weareprayergroup" #make secure
 
@@ -41,23 +41,17 @@ def GET_signup():
 @app.post("/signup")
 def POST_signup():
     sform = SignupForm()
-    if sform.validate():
-      pass
-      # This is where a new user is created and added to db
-        # temp = Student(
-        #     fname=sform.fname.data,
-        #     lname=sform.lname.data,
-        #     mintial=sform.mintial.data,
-        #     student_id=sform.student_id.data,
-        #     gender=sform.gender.data,
-        #     grad_year=sform.grad_year.data,
-        #     email=sform.email.data,
-        #     phone_num=sform.phone_num.data,
-        #     password=sform.password.data,
-        # )
-        # db.session.add(temp)
-        # db.session.commit()
-        # return redirect(url_for("main_page"))
+    if sform.validate(): #Make sure that the email does not already exist
+      user = auth.create_user(email = sform.email.data)
+      doc_ref = db.collection(u'User').document(user.uid)
+      doc_ref.set({
+      'address': sform.home_address.data,
+      'email': sform.email.data,
+      'firstName': sform.fname.data,
+      'lastName': sform.lname.data,
+      'phoneNumber': sform.phone_num.data
+      })
+      return "All signed up!" #redirect to home page with logged in session
     else: #basic error handling
         for field, error in sform.errors.items():
             flash(f"{field}: {error}")
