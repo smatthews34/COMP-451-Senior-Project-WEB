@@ -5,7 +5,7 @@ from firebase_admin import credentials
 from firebase_admin import db
 
 # Fetch the service account key JSON file contents
-cred = credentials.Certificate('prayer-group-fc24c-firebase-adminsdk-xav6o-9d178f3518.json')
+cred = credentials.Certificate('Prayer-Group-WEB\prayer-group-fc24c-firebase-adminsdk-xav6o-9d178f3518.json')
 firebase_admin.initialize_app(cred)
 
 #How to access a node reference: ref = db.reference('Database reference')
