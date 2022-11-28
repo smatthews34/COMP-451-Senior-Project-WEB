@@ -66,7 +66,7 @@ def GET_login(): #Get login form
 def POST_login(): #Post login form
   lform = LoginForm()
   if lform.validate:
-    pass #IMPORTANT: This is where DB will be checked to ensure that user can be logged in
+    return "This will be completed soon" #IMPORTANT: This is where DB will be checked to ensure that user can be logged in
   else: #basic error handling
         for field, error in lform.errors.items():
             flash(f"{field}: {error}")
