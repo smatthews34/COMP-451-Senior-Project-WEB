@@ -1,12 +1,12 @@
 from flask import Flask, request, render_template, flash, redirect, url_for
-from prayer_group_forms import InviteForm, SignupForm
+from prayer_group_forms import InviteForm, SignupForm, LoginForm
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "weareprayergroup" #make secure
 
-@app.route("/") #reroute somewhere
+@app.route("/")
 def hello():
-  return "Hello World"
+  return redirect(url_for("GET_invite"))
 
 @app.get("/invite")
 def GET_invite():
@@ -17,15 +17,18 @@ def GET_invite():
 def POST_invite():
   iform = InviteForm()
   if iform.validate():
-    pass
-    # This is where you continue to signup below
+    return redirect(url_for("GET_signup"))  # IMPORTANT: This will be changed to allow for code valdation before the redirect
+  else: #basic error handling
+        for field, error in iform.errors.items():
+            flash(f"{field}: {error}")
+        return redirect(url_for("GET_invite"))
 
-@app.get("/signup") #perhaps change route to "/signup"
+@app.get("/signup")
 def GET_signup():
     sform = SignupForm()
-    return render_template("signup.j2", form=sform) #add form from above
+    return render_template("signup.j2", form=sform)
 
-@app.post("/signup") #perhaps change route to "/signup"
+@app.post("/signup")
 def POST_signup():
     sform = SignupForm()
     if sform.validate():
@@ -49,6 +52,21 @@ def POST_signup():
         for field, error in sform.errors.items():
             flash(f"{field}: {error}")
         return redirect(url_for("GET_signup"))
+
+@app.get("/login")
+def GET_login(): #Get login form
+  lform = LoginForm()
+  return render_template("login.j2", form=lform)
+
+@app.post("/login")
+def POST_login(): #Post login form
+  lform = LoginForm()
+  if lform.validate:
+    pass #IMPORTANT: This is where DB will be checked to ensure that user can be logged in
+  else: #basic error handling
+        for field, error in lform.errors.items():
+            flash(f"{field}: {error}")
+        return redirect(url_for("GET_login"))
 
 if __name__ == "__main__":
   app.run()

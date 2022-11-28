@@ -1,0 +1,5 @@
+#Config Files
+senior_project_WEB/venv/
+
+#Cache
+src/_pychache_/

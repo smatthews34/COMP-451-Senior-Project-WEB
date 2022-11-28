@@ -16,3 +16,8 @@ class SignupForm(FlaskForm):
     phone_num = TelField("Phone Number (Optional): ")
     home_address = StringField("Home Address (Optional): ")
     submit = SubmitField("Sign Up")
+
+class LoginForm(FlaskForm):
+    email = EmailField("Email Address: ", validators=[InputRequired("Please enter your Email.")])
+    password = PasswordField("Password: ", validators=[InputRequired("Please enter your Password."), Length(min=8, max=256)])
+    submit = SubmitField("Sign Up")
