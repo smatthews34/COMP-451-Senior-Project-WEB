@@ -72,5 +72,10 @@ def POST_login(): #Post login form
             flash(f"{field}: {error}")
         return redirect(url_for("GET_login"))
 
+@app.route("/admin/prayerlist")
+def prayer_list():
+  list =  db.reference('/Prayer Group')
+  return render_template("adminprayerlist.j2")
+
 if __name__ == "__main__":
   app.run()

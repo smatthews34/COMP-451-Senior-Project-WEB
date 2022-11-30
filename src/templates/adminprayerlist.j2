@@ -18,9 +18,13 @@
         <tbody>
             {% for request in requests %}
                 <tr>
-                    <td>{{book.title}}</td>
-                    <td>{{book.author.firstName}} {{book.author.middleInital}} {{book.author.lastName}}</td>
-                    <td>{{book.year}}</td>
+                    {% if request.isAnonymous == true %}
+                        <td>Anonymous</td>
+                    {% else %}
+                        <td>{{request.firstName}} {{request.lastName}}</td>
+                    {% endif %}
+                    <td>{{request.text}}</td>
+                    
                 </tr>
             {% endfor %}
         </tbody>
