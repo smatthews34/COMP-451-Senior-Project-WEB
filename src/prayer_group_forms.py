@@ -1,6 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, SubmitField, PasswordField
-from wtforms.fields.html5 import EmailField, TelField
+from wtforms.fields import StringField, SubmitField, PasswordField, EmailField, TelField
 from wtforms.validators import InputRequired, Email, Length, EqualTo
 
 class InviteForm(FlaskForm):

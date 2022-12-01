@@ -6,7 +6,7 @@ from firebase_admin import firestore
 from firebase_admin import auth
 
 # Database setup
-cred = credentials.Certificate('Prayer-Group-WEB\prayer-group-fc24c-firebase-adminsdk-xav6o-9d178f3518.json')
+cred = credentials.Certificate('prayer-group-fc24c-firebase-adminsdk-xav6o-9d178f3518.json')
 app = firebase_admin.initialize_app(cred)
 db = firestore.client()
 
@@ -78,7 +78,7 @@ def admin_splash():
 
 @app.route("/admin/prayerlist")
 def prayer_list():
-  prayer_ref =  db.colection(u'Prayer Request')
+  prayer_ref =  db.collection(u'Prayer Request')
   request = prayer_ref.stream()
   return render_template("adminprayerlist.j2", request=request)
 
