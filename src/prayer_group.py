@@ -80,7 +80,10 @@ def admin_splash():
 def prayer_list():
   prayer_ref =  db.collection(u'Prayer Request')
   request = prayer_ref.stream()
-  return render_template("adminprayerlist.j2", request=request)
+  jsonRequests = []
+  for doc in request:
+    jsonRequests.append(doc.to_dict())
+  return render_template("adminprayerlist.j2", requests=jsonRequests)
 
 if __name__ == "__main__":
   app.run()
