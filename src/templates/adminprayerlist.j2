@@ -18,12 +18,12 @@
         <tbody>
             {% for request in requests %}
                 <tr>
-                    {% if request.isAnonymous == true %}
+                    {% if request['isAnonymous'] == true %}
                         <td>Anonymous</td>
                     {% else %}
-                        <td>{{request.firstName}} {{request.lastName}}</td>
+                        <td>{{request['firstName']}} {{request['lastName']}}</td>
                     {% endif %}
-                    <td>{{request.text}}</td>
+                    <td>{{request['text']}}</td>
                     
                 </tr>
             {% endfor %}

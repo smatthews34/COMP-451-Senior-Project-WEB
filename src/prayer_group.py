@@ -88,7 +88,15 @@ def admin_splash():
 def prayer_list():
   prayer_ref =  db.collection(u'Prayer Request')
   request = prayer_ref.stream()
-  return render_template("adminprayerlist.j2", request=request)
+  jsonRequests = []
+  
+  # So the requests in the request variable above are of type DocumentSnapshot. Without converting
+  # them to dictionaries, we really can't do much with them. Thus, the loop below grabs each DocumentSnapshot
+  # and converts it to a dictionary and appends that dictionary to the jsonRequests list.
+  # In the HTML document, you will see that we can access the values at a key using request['key'].
+  for doc in request:
+    jsonRequests.append(doc.to_dict())
+  return render_template("adminprayerlist.j2", requests=jsonRequests)
 
 if __name__ == "__main__":
   app.run()
