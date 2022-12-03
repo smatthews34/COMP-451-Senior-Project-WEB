@@ -1,9 +1,10 @@
-from flask import Flask, request, render_template, flash, redirect, url_for
+from flask import Flask, request, render_template, flash, redirect, url_for, flash
+import flask_login
 from prayer_group_forms import InviteForm, SignupForm, LoginForm
 import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import firestore
-from firebase_admin import auth
+from firebase_admin import credentials, firestore, auth
+from firebase_admin.auth import UserRecord
+
 
 # Database setup
 cred = credentials.Certificate('prayer-group-fc24c-firebase-adminsdk-xav6o-9d178f3518.json')
@@ -42,7 +43,7 @@ def GET_signup():
 def POST_signup():
     sform = SignupForm()
     if sform.validate(): #Make sure that the email does not already exist
-      user = auth.create_user(email = sform.email.data)
+      user = auth.create_user(email = sform.email.data, password = sform.password.data)
       doc_ref = db.collection(u'User').document(user.uid)
       doc_ref.set({
       'address': sform.home_address.data,
@@ -66,7 +67,14 @@ def GET_login(): #Get login form
 def POST_login(): #Post login form
   lform = LoginForm()
   if lform.validate:
-    return "This will be completed soon" #IMPORTANT: This is where DB will be checked to ensure that user can be logged in
+    try:
+      unauth_user = auth.get_user_by_email(str(lform.email))
+      #check if email/password are correct using javascript
+      #log them in, communitcate with JavaScript
+      return "This will be completed soon" #IMPORTANT: This is where DB will be checked to ensure that user can be logged in
+    except auth.UserNotFoundError:
+      #User does not exist. Reroute to login and flash error message.
+      return "User does not exist"
   else: #basic error handling
         for field, error in lform.errors.items():
             flash(f"{field}: {error}")
