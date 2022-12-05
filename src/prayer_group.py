@@ -70,11 +70,13 @@ def POST_login(): #Post login form
   lform = LoginForm()
   if lform.validate:
     r, code = sign_in_with_email_and_password(lform.email.data, lform.password.data)
-    print(json.dumps(r, indent = 1)) #temporary
-    #if r['error']['code'] == 400: #This works
     if code == 400:
       return "Email or password not found, please try again"
     else:
+      uid = r['localID']
+      token = r['idToken']
+      email = r['email']
+      refresh_token = r['refreshToken'] #all info that may be useful for sessions
       return "Logged in"
   else: #basic error handling
     for field, error in lform.errors.items():
