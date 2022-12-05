@@ -3,13 +3,15 @@ import flask_login
 from prayer_group_forms import InviteForm, SignupForm, LoginForm
 import firebase_admin
 from firebase_admin import credentials, firestore, auth
-from firebase_admin.auth import UserRecord
-
+import json, requests
+#from pyrebase import pyrebase
 
 # Database setup
 cred = credentials.Certificate('prayer-group-fc24c-firebase-adminsdk-xav6o-9d178f3518.json')
 app = firebase_admin.initialize_app(cred)
 db = firestore.client()
+FIREBASE_WEB_API_KEY = "AIzaSyAMBpbtmxZC0nZcsWvvkJi8enndmG9pGIU"
+rest_api_url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword"
 
 # Flask setup
 app = Flask(__name__)
@@ -43,7 +45,7 @@ def GET_signup():
 def POST_signup():
     sform = SignupForm()
     if sform.validate(): #Make sure that the email does not already exist
-      user = auth.create_user(email = sform.email.data, password = sform.password.data)
+      user = auth.create_user(email = str(sform.email.data), password = str(sform.password.data))
       doc_ref = db.collection(u'User').document(user.uid)
       doc_ref.set({
       'address': sform.home_address.data,
@@ -67,18 +69,17 @@ def GET_login(): #Get login form
 def POST_login(): #Post login form
   lform = LoginForm()
   if lform.validate:
-    try:
-      unauth_user = auth.get_user_by_email(str(lform.email))
-      #check if email/password are correct using javascript
-      #log them in, communitcate with JavaScript
-      return "This will be completed soon" #IMPORTANT: This is where DB will be checked to ensure that user can be logged in
-    except auth.UserNotFoundError:
-      #User does not exist. Reroute to login and flash error message.
-      return "User does not exist"
+    r, code = sign_in_with_email_and_password(lform.email.data, lform.password.data)
+    print(json.dumps(r, indent = 1)) #temporary
+    #if r['error']['code'] == 400: #This works
+    if code == 400:
+      return "Email or password not found, please try again"
+    else:
+      return "Logged in"
   else: #basic error handling
-        for field, error in lform.errors.items():
-            flash(f"{field}: {error}")
-        return redirect(url_for("GET_login"))
+    for field, error in lform.errors.items():
+      flash(f"{field}: {error}")
+      return redirect(url_for("GET_login"))
 
 @app.route("/admin")
 def admin_splash():
@@ -97,6 +98,15 @@ def prayer_list():
   for doc in request:
     jsonRequests.append(doc.to_dict())
   return render_template("adminprayerlist.j2", requests=jsonRequests)
+
+def sign_in_with_email_and_password(email: str, password: str, return_secure_token: bool = True): #REST API set up with help from https://betterprogramming.pub/user-management-with-firebase-and-python-749a7a87b2b6
+  payload = json.dumps({
+      "email": email,
+      "password": password,
+      "returnSecureToken": return_secure_token
+  })
+  r = requests.post(rest_api_url, params={"key": FIREBASE_WEB_API_KEY}, data=payload)
+  return r.json(), r.status_code
 
 if __name__ == "__main__":
   app.run()
