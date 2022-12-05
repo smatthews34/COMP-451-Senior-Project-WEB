@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prayer List</title>
+</head>
+<body>
+    <!--display prayers-->
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Prayer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
+                <tr>
+                    {% if request['isAnonymous'] == true %}
+                        <td>Anonymous</td>
+                    {% else %}
+                        <td>{{request['firstName']}} {{request['lastName']}}</td>
+                    {% endif %}
+                    <td>{{request['text']}}</td>
+                    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/home">Back</a>
+</body>
+</html>

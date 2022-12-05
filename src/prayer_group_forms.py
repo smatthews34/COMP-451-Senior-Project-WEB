@@ -19,4 +19,4 @@ class SignupForm(FlaskForm):
 class LoginForm(FlaskForm):
     email = EmailField("Email Address: ", validators=[InputRequired("Please enter your Email.")])
     password = PasswordField("Password: ", validators=[InputRequired("Please enter your Password."), Length(min=8, max=256)])
-    submit = SubmitField("Sign Up")
+    submit = SubmitField("Login")

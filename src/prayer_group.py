@@ -1,10 +1,9 @@
-from flask import Flask, request, render_template, flash, redirect, url_for, flash
-import flask_login
+from flask import Flask, request, render_template, flash, redirect, url_for, flash, session
+from flask_login import login_manager, login_required
 from prayer_group_forms import InviteForm, SignupForm, LoginForm
 import firebase_admin
 from firebase_admin import credentials, firestore, auth
 import json, requests
-#from pyrebase import pyrebase
 
 # Database setup
 cred = credentials.Certificate('prayer-group-fc24c-firebase-adminsdk-xav6o-9d178f3518.json')
@@ -54,7 +53,12 @@ def POST_signup():
       'lastName': sform.lname.data,
       'phoneNumber': sform.phone_num.data
       })
-      return "All signed up!" #redirect to home page with logged in session
+      r, code = sign_in_with_email_and_password(sform.email.data, sform.password.data)
+      uid = r['localId']
+      token = r['idToken']
+      email = r['email']
+      refresh_token = r['refreshToken'] #all info that may be useful for sessions
+      return redirect(url_for("home"))
     else: #basic error handling
         for field, error in sform.errors.items():
             flash(f"{field}: {error}")
@@ -71,17 +75,31 @@ def POST_login(): #Post login form
   if lform.validate:
     r, code = sign_in_with_email_and_password(lform.email.data, lform.password.data)
     if code == 400:
-      return "Email or password not found, please try again"
+      flash("Email or password not found, please try again")
+      return redirect(url_for("GET_login"))
     else:
-      uid = r['localID']
+      uid = r['localId']
       token = r['idToken']
       email = r['email']
       refresh_token = r['refreshToken'] #all info that may be useful for sessions
-      return "Logged in"
+      return redirect(url_for("home"))
   else: #basic error handling
     for field, error in lform.errors.items():
       flash(f"{field}: {error}")
       return redirect(url_for("GET_login"))
+
+@app.route("/home")
+def home():
+  return render_template("main.j2")
+
+@app.route("/prayerlist")
+def prayerlist():
+  prayer_ref =  db.collection(u'Prayer Request')
+  request = prayer_ref.stream()
+  jsonRequests = []
+  for doc in request:
+    jsonRequests.append(doc.to_dict())
+  return render_template("prayerlist.j2", requests=jsonRequests)
 
 @app.route("/admin")
 def admin_splash():
