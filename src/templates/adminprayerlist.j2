@@ -24,6 +24,9 @@
                         <td>{{request['firstName']}} {{request['lastName']}}</td>
                     {% endif %}
                     <td>{{request['text']}}</td>
+                    {% if request['update'] %}
+                        <td>UPDATE: {{request['update']}}</td>
+                    {% endif %}
                     
                 </tr>
             {% endfor %}
