@@ -121,19 +121,23 @@ def prayer_list():
 
 @app.route("/admin/guidedprayers")
 def admin_guided_prayers():
-  pass
+  return render_template("adminguidedprayers.j2")
+  
 
 @app.route("/admin/smallgroups")
 def admin_small_groups():
-  pass
+  return render_template("adminsmallgroups.j2")
+  
 
 @app.route("/admin/adminlist")
 def admin_admin_list():
-  pass
+  return render_template("adminadminlist.j2")
+  
 
 @app.route("/admin/memberlist")
 def admin_members_list():
-  pass
+  return render_template("memberslist.j2")
+  
 
 def sign_in_with_email_and_password(email: str, password: str, return_secure_token: bool = True): #REST API set up with help from https://betterprogramming.pub/user-management-with-firebase-and-python-749a7a87b2b6
   payload = json.dumps({
