@@ -119,6 +119,22 @@ def prayer_list():
     jsonRequests.append(doc.to_dict())
   return render_template("adminprayerlist.j2", requests=jsonRequests)
 
+@app.route("/admin/guidedprayers")
+def admin_guided_prayers():
+  pass
+
+@app.route("/admin/smallgroups")
+def admin_small_groups():
+  pass
+
+@app.route("/admin/adminlist")
+def admin_admin_list():
+  pass
+
+@app.route("/admin/memberlist")
+def admin_members_list():
+  pass
+
 def sign_in_with_email_and_password(email: str, password: str, return_secure_token: bool = True): #REST API set up with help from https://betterprogramming.pub/user-management-with-firebase-and-python-749a7a87b2b6
   payload = json.dumps({
       "email": email,
