@@ -13,5 +13,24 @@
     <a href="/admin/smallgroups">Small Groups</a>
     <a href="/admin/adminlist">Administrators</a>
     <a href="/admin/memberlist">Members</a>
+    <!--display guided prayers-->
+    <table>
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Reference</th>
+                <th>Text</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
+                <tr>
+                    <td>{{request['Category']}}</td>
+                    <td>{{request['Reference']}}</td>
+                    <td>{{request['Text']}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>

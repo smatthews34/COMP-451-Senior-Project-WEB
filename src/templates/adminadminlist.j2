@@ -13,5 +13,25 @@
     <a href="/admin/smallgroups">Small Groups</a>
     <a href="/admin/adminlist">Administrators</a>
     <a href="/admin/memberlist">Members</a>
+    <!--display admins-->
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Account</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
+                <tr>
+                    <td>{{request['Name']}}</td>
+                    <td>{{request['MemberAccount']}}</td>
+                    {% if request['update']==true %}
+                        <td>*HeadPastor*</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>
