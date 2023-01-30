@@ -26,8 +26,8 @@
                 <tr>
                     <td>{{request['Name']}}</td>
                     <td>{{request['MemberAccount']}}</td>
-                    {% if request['update']==true %}
-                        <td>*HeadPastor*</td>
+                    {% if request['headPastor']==true %}
+                        <td>*Head Pastor*</td>
                     {% endif %}
                 </tr>
             {% endfor %}
