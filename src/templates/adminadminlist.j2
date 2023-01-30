@@ -24,8 +24,8 @@
         <tbody>
             {% for request in requests %}
                 <tr>
-                    <td>{{request['Name']}}</td>
-                    <td>{{request['MemberAccount']}}</td>
+                    <td>{{request['firstName']}}</td>
+                    <td>{{request['lastName']}}</td>
                     {% if request['headPastor']==true %}
                         <td>*Head Pastor*</td>
                     {% endif %}
