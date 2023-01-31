@@ -128,6 +128,23 @@ def admin_guided_prayers():
     jsonRequests.append(doc.to_dict())
   return render_template("adminguidedprayers.j2", requests=jsonRequests)
   
+@app.route("/admin/guidedprayers/add") #need to figure out how to add something to database in python
+def admin_guided_prayers():
+  prayer_ref =  db.collection(u'Guided Prayer')
+  request = prayer_ref.stream()
+  jsonRequests = []
+  for doc in request:
+    jsonRequests.append(doc.to_dict())
+  return render_template("adminprayeradd.j2", requests=jsonRequests)
+
+@app.route("/admin/guidedprayers/edit") #should be similar
+def admin_guided_prayers():
+  prayer_ref =  db.collection(u'Guided Prayer')
+  request = prayer_ref.stream()
+  jsonRequests = []
+  for doc in request:
+    jsonRequests.append(doc.to_dict())
+  return render_template("adminprayeredit.j2", requests=jsonRequests)
 
 @app.route("/admin/smallgroups")
 def admin_small_groups():
@@ -137,6 +154,24 @@ def admin_small_groups():
   for doc in request:
     jsonRequests.append(doc.to_dict())
   return render_template("adminsmallgroups.j2", requests=jsonRequests)
+
+@app.route("/admin/smallgroups/add") #need to figure out how to add something to database in python
+def admin_guided_prayers():
+  prayer_ref =  db.collection(u'Guided Prayer')
+  request = prayer_ref.stream()
+  jsonRequests = []
+  for doc in request:
+    jsonRequests.append(doc.to_dict())
+  return render_template("admingroupadd.j2", requests=jsonRequests)
+
+@app.route("/admin/guidedprayers/edit") #should be similar
+def admin_guided_prayers():
+  prayer_ref =  db.collection(u'Guided Prayer')
+  request = prayer_ref.stream()
+  jsonRequests = []
+  for doc in request:
+    jsonRequests.append(doc.to_dict())
+  return render_template("adminprayeredit.j2", requests=jsonRequests)
   
 
 @app.route("/admin/adminlist")
