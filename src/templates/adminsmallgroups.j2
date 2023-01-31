@@ -14,6 +14,7 @@
     <a href="/admin/adminlist">Administrators</a>
     <a href="/admin/memberlist">Members</a>
     <!--display groups-->
+    <a href="/admin/smallgroups/add">Add Group</a>
     <table>
         <thead>
             <tr>
@@ -30,6 +31,8 @@
                     <td>{{request['NumMembers']}}</td>
                     <td>{{request['Members']}}</td>
                     <td>{{request['Last Active']}}</td>
+                    <a href="/admin/smallgroups/edit">Edit Group</a>
+                    <!--need to display group info on edit page-->
                 </tr>
             {% endfor %}
         </tbody>

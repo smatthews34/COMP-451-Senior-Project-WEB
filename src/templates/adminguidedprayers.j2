@@ -14,6 +14,7 @@
     <a href="/admin/adminlist">Administrators</a>
     <a href="/admin/memberlist">Members</a>
     <!--display guided prayers-->
+    <a href="/admin/guidedprayers/add">Add Prayer</a> 
     <table>
         <thead>
             <tr>
@@ -28,6 +29,8 @@
                     <td>{{request['Category']}}</td>
                     <td>{{request['Reference']}}</td>
                     <td>{{request['Text']}}</td>
+                    <a href="/admin/guidedprayers/edit">Edit</a> 
+                    <!--need way to get information for this prayer into the edit page-->
                 </tr>
             {% endfor %}
         </tbody>
