@@ -129,7 +129,7 @@ def admin_guided_prayers():
   return render_template("adminguidedprayers.j2", requests=jsonRequests)
   
 @app.route("/admin/guidedprayers/add" , methods = ["GET","POST"]) #need to figure out how to add something to database in python
-def admin_guided_prayers():
+def admin_guided_prayers_add():
   prayer_ref =  db.collection(u'Guided Prayer')
   request = prayer_ref.stream()
   jsonRequests = []
@@ -138,7 +138,7 @@ def admin_guided_prayers():
   return render_template("adminprayeradd.j2", requests=jsonRequests)
 
 @app.route("/admin/guidedprayers/edit" , methods = ["GET","POST"]) #should be similar
-def admin_guided_prayers():
+def admin_guided_prayers_edit():
   prayer_ref =  db.collection(u'Guided Prayer')
   request = prayer_ref.stream()
   jsonRequests = []
@@ -156,7 +156,7 @@ def admin_small_groups():
   return render_template("adminsmallgroups.j2", requests=jsonRequests)
 
 @app.route("/admin/smallgroups/add", methods = ["GET","POST"]) #need to figure out how to add something to database in python
-def admin_guided_prayers():
+def admin_small_groups_add():
   prayer_ref =  db.collection(u'Guided Prayer')
   request = prayer_ref.stream()
   jsonRequests = []
@@ -165,7 +165,7 @@ def admin_guided_prayers():
   return render_template("admingroupadd.j2", requests=jsonRequests)
 
 @app.route("/admin/guidedprayers/edit" , methods = ["GET","POST"]) #should be similar
-def admin_guided_prayers():
+def admin_small_groups_edit():
   prayer_ref =  db.collection(u'Guided Prayer')
   request = prayer_ref.stream()
   jsonRequests = []
