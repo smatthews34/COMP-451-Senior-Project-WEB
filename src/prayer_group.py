@@ -158,7 +158,6 @@ def admin_small_groups():
 @app.route("/admin/smallgroups/add", methods = ["GET","POST"]) #need to figure out how to add something to database in python
 def admin_small_groups_add():
   form = GroupForm()
-  #testing testing
   prayer_ref =  db.collection(u'Users')
   data = prayer_ref.stream()
   jsonRequests = []
