@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, flash, redirect, url_for, flash, session
 from flask_login import login_manager, login_required
-from prayer_group_forms import InviteForm, SignupForm, LoginForm
+from prayer_group_forms import InviteForm, SignupForm, LoginForm, GroupForm, GuidedForm
 import firebase_admin
 from firebase_admin import credentials, firestore, auth
 import json, requests
@@ -157,12 +157,16 @@ def admin_small_groups():
 
 @app.route("/admin/smallgroups/add", methods = ["GET","POST"]) #need to figure out how to add something to database in python
 def admin_small_groups_add():
-  prayer_ref =  db.collection(u'Guided Prayer')
-  request = prayer_ref.stream()
+  form = GroupForm()
+  prayer_ref =  db.collection(u'Users')
+  data = prayer_ref.stream()
   jsonRequests = []
-  for doc in request:
+  for doc in data:
     jsonRequests.append(doc.to_dict())
-  return render_template("admingroupadd.j2", requests=jsonRequests)
+  if request.method == "GET":
+    return render_template("admingroupadd.j2", data=jsonRequests)
+  if request.method == "POST":
+    pass
 
 @app.route("/admin/guidedprayers/edit" , methods = ["GET","POST"]) #should be similar
 def admin_small_groups_edit():
