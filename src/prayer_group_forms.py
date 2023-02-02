@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, SubmitField, PasswordField, EmailField, TelField, TextAreaField
+from wtforms.fields import StringField, SubmitField, SelectMultipleField, SelectField, PasswordField, EmailField, TelField, TextAreaField
 from wtforms.validators import InputRequired, Email, Length, EqualTo
 from wtforms.widgets import TextArea
 
@@ -21,7 +21,18 @@ class LoginForm(FlaskForm):
     email = EmailField("Email Address: ", validators=[InputRequired("Please enter your Email.")])
     password = PasswordField("Password: ", validators=[InputRequired("Please enter your Password."), Length(min=8, max=256)])
     submit = SubmitField("Login")
-
+    
 class PrayerForm(FlaskForm):
     prayer = StringField("", validators=[InputRequired("Please enter your prayer request")], widget=TextArea())
     submit = SubmitField("Post")
+
+class GroupForm(FlaskForm):
+    name = StringField("Name: ", validators=[InputRequired("Please name the group.")])
+    members = SelectMultipleField("Members: ", choices=[])
+
+class GuidedForm(FlaskForm):
+    category = StringField("Category: ", validators=[InputRequired("Please enter the category.")])
+    reference = StringField("reference: ", validators=[InputRequired("Please enter the verse.")])
+    text = StringField("Category: ", validators=[InputRequired("Please enter in the verse's text.")])
+
+    submit = SubmitField("submit")

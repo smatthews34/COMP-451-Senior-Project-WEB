@@ -119,6 +119,81 @@ def prayer_list():
     jsonRequests.append(doc.to_dict())
   return render_template("adminprayerlist.j2", requests=jsonRequests)
 
+@app.route("/admin/guidedprayers")
+def admin_guided_prayers():
+  prayer_ref =  db.collection(u'Guided Prayer')
+  request = prayer_ref.stream()
+  jsonRequests = []
+  for doc in request:
+    jsonRequests.append(doc.to_dict())
+  return render_template("adminguidedprayers.j2", requests=jsonRequests)
+  
+@app.route("/admin/guidedprayers/add" , methods = ["GET","POST"]) #need to figure out how to add something to database in python
+def admin_guided_prayers_add():
+  prayer_ref =  db.collection(u'Guided Prayer')
+  request = prayer_ref.stream()
+  jsonRequests = []
+  for doc in request:
+    jsonRequests.append(doc.to_dict())
+  return render_template("adminprayeradd.j2", requests=jsonRequests)
+
+@app.route("/admin/guidedprayers/edit" , methods = ["GET","POST"]) #should be similar
+def admin_guided_prayers_edit():
+  prayer_ref =  db.collection(u'Guided Prayer')
+  request = prayer_ref.stream()
+  jsonRequests = []
+  for doc in request:
+    jsonRequests.append(doc.to_dict())
+  return render_template("adminprayeredit.j2", requests=jsonRequests)
+
+@app.route("/admin/smallgroups")
+def admin_small_groups():
+  prayer_ref =  db.collection(u'Group')
+  request = prayer_ref.stream()
+  jsonRequests = []
+  for doc in request:
+    jsonRequests.append(doc.to_dict())
+  return render_template("adminsmallgroups.j2", requests=jsonRequests)
+
+@app.route("/admin/smallgroups/add", methods = ["GET","POST"]) #need to figure out how to add something to database in python
+def admin_small_groups_add():
+  prayer_ref =  db.collection(u'Guided Prayer')
+  request = prayer_ref.stream()
+  jsonRequests = []
+  for doc in request:
+    jsonRequests.append(doc.to_dict())
+  return render_template("admingroupadd.j2", requests=jsonRequests)
+
+@app.route("/admin/guidedprayers/edit" , methods = ["GET","POST"]) #should be similar
+def admin_small_groups_edit():
+  prayer_ref =  db.collection(u'Guided Prayer')
+  request = prayer_ref.stream()
+  jsonRequests = []
+  for doc in request:
+    jsonRequests.append(doc.to_dict())
+  return render_template("adminprayeredit.j2", requests=jsonRequests)
+  
+
+@app.route("/admin/adminlist")
+def admin_admin_list():
+  prayer_ref =  db.collection(u'Admin')
+  request = prayer_ref.stream()
+  jsonRequests = []
+  for doc in request:
+    jsonRequests.append(doc.to_dict())
+  return render_template("adminadminlist.j2", requests=jsonRequests)
+  
+
+@app.route("/admin/memberlist")
+def admin_members_list():
+  prayer_ref =  db.collection(u'User')
+  request = prayer_ref.stream()
+  jsonRequests = []
+  for doc in request:
+    jsonRequests.append(doc.to_dict())
+  return render_template("adminmemberslist.j2", requests=jsonRequests)
+  
+
 def sign_in_with_email_and_password(email: str, password: str, return_secure_token: bool = True): #REST API set up with help from https://betterprogramming.pub/user-management-with-firebase-and-python-749a7a87b2b6
   payload = json.dumps({
       "email": email,

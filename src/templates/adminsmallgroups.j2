@@ -13,27 +13,26 @@
     <a href="/admin/smallgroups">Small Groups</a>
     <a href="/admin/adminlist">Administrators</a>
     <a href="/admin/memberlist">Members</a>
-    <!--display prayers-->
+    <!--display groups-->
+    <a href="/admin/smallgroups/add">Add Group</a>
     <table>
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Prayer</th>
+                <th>NumMembers</th>
+                <th>Members</th>
+                <th>Last Active</th>
             </tr>
         </thead>
         <tbody>
             {% for request in requests %}
                 <tr>
-                    {% if request['isAnonymous'] == true %}
-                        <td>Anonymous</td>
-                    {% else %}
-                        <td>{{request['firstName']}} {{request['lastName']}}</td>
-                    {% endif %}
-                    <td>{{request['text']}}</td>
-                    {% if request['update'] %}
-                        <td>UPDATE: {{request['update']}}</td>
-                    {% endif %}
-                    
+                    <td>{{request['Name']}}</td>
+                    <td>{{request['NumMembers']}}</td>
+                    <td>{{request['Members']}}</td>
+                    <td>{{request['Last Active']}}</td>
+                    <a href="/admin/smallgroups/edit">Edit Group</a>
+                    <!--need to display group info on edit page-->
                 </tr>
             {% endfor %}
         </tbody>
