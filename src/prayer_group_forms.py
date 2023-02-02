@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField, SubmitField, PasswordField, EmailField, TelField
+from wtforms.fields import StringField, SubmitField, PasswordField, EmailField, TelField, TextAreaField
 from wtforms.validators import InputRequired, Email, Length, EqualTo
+from wtforms.widgets import TextArea
 
 class InviteForm(FlaskForm):
     invite = StringField("Invitation Code: ", validators=[InputRequired("Please enter your Invitaton Code.")])
@@ -20,3 +21,7 @@ class LoginForm(FlaskForm):
     email = EmailField("Email Address: ", validators=[InputRequired("Please enter your Email.")])
     password = PasswordField("Password: ", validators=[InputRequired("Please enter your Password."), Length(min=8, max=256)])
     submit = SubmitField("Login")
+
+class PrayerForm(FlaskForm):
+    prayer = StringField("", validators=[InputRequired("Please enter your prayer request")], widget=TextArea())
+    submit = SubmitField("Post")
